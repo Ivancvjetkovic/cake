@@ -1,12 +1,21 @@
 import 'package:cake_app/buttons/buttons.dart';
 import 'package:cake_app/buttons/counter_button.dart';
 import 'package:flutter/material.dart';
-int currentIndex = 0;
-class SecondScreen extends StatelessWidget {
+
+const int currentIndex = 0;
+
+class SecondScreen extends StatefulWidget {
   const SecondScreen({super.key});
 
   @override
+  State<SecondScreen> createState() => _SecondScreenState();
+}
+
+class _SecondScreenState extends State<SecondScreen> {
+  int? _value = 0;
+  @override
   Widget build(BuildContext context) {
+    int image = 0;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -29,226 +38,269 @@ class SecondScreen extends StatelessWidget {
               ),
             ]),
         body: SafeArea(
-          child: Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: const Color.fromARGB(255, 59, 33, 104),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    'Fruits Cake',
-                    style: TextStyle(fontSize: 25, color: Colors.grey),
-                  ),
-                ),
-                const Text(
-                  'strawberry & kiwi special',
-                  style: TextStyle(
-                      fontSize: 15, color: Color.fromARGB(255, 190, 173, 15)),
-                ),
-               // OutLinedButton(),
-                Row(
-                  children: [
-                    
-                    Container(
-                      height: 200,
-                      width: 300,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('images/cake.png'),
-                        ),
-                      ),
-                  
+          child: SingleChildScrollView(
+            child: Container(
+              color: const Color.fromARGB(255, 59, 33, 104),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      'Fruits Cake',
+                      style: TextStyle(fontSize: 25, color: Colors.grey),
                     ),
-                 Padding(
-                   padding: const EdgeInsets.all(10.0),
-                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                  const Text(
+                    'strawberry & kiwi special',
+                    style: TextStyle(
+                        fontSize: 15, color: Color.fromARGB(255, 190, 173, 15)),
+                  ),
+                  Wrap(
+                    children: List<Widget>.generate(
+                      4,
+                      (int index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: ChoiceChip(
+                            backgroundColor: Colors.grey,
+                            selectedColor: Colors.green,
+                            label: Text('${index + 1} KG'),
+                            selected: _value == index,
+                            onSelected: (bool selected) {
+                              setState(() {
+                                _value = selected ? index : null;
+                              });
+                              print(_value);
+                              print(index);
+                            },
+                          ),
+                        );
+                      },
+                    ).toList(),
+                  ),
+                  Row(
                     children: [
-                    Button()
-                   ],),
-                 )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 90,
-                          width: 50,
-                          // ignore: sort_child_properties_last
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.egg_rounded,
-                                color: Colors.white,
-                                size: 50,
-                              ),
-                              Text(
-                                '4 Eggs',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 20, 8, 51),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20)),
-                          ),
+                      Container(
+                          height: 200,
+                          width: 300,
+                          decoration: () {
+                            switch (_value) {
+                              case 0:
+                                return const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('images/cake0.png')),
+                                );
+                              case 1:
+                                return const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('images/cake1.png')),
+                                );
+                              case 2:
+                                return const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('images/cake2.png')),
+                                );
+                              case 3:
+                                return const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('images/cake3.png')),
+                                );
+
+                              default:
+                                return const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('images/cake0.png')),
+                                );
+                            }
+                          }()),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [Button()],
                         ),
-                      ),
-                      const SizedBox(
-                          height: 90.0,
-                          width: 12.0,
-                          child: VerticalDivider(color: Colors.white)),
-                      Expanded(
-                        child: Container(
-                          // ignore: sort_child_properties_last
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.cake_sharp,
-                                color: Colors.white,
-                                size: 50,
-                              ),
-                              Text(
-                                '2 tsp Vanilla',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          height: 90,
-                          width: 50,
-                          color: const Color.fromARGB(255, 20, 8, 51),
-                        ),
-                      ),
-                      const SizedBox(
-                          height: 90.0,
-                          width: 10.0,
-                          child: VerticalDivider(color: Colors.white)),
-                      Expanded(
-                        child: Container(
-                          height: 90,
-                          width: 50,
-                          // ignore: sort_child_properties_last
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.rice_bowl,
-                                color: Colors.white,
-                                size: 50,
-                              ),
-                              Text(
-                                '1 Cup Sugar',
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 20, 8, 51),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20),
-                                bottomRight: Radius.circular(20)),
-                          ),
-                        ),
-                      ),
+                      )
                     ],
                   ),
-                ),
-
-                SizedBox(
-                  height: 50.0,
-                ),
-                // ignore: sized_box_for_whitespace
-                Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 2),
-                      height: 100,
-                      width: 100,
-                      // ignore: prefer_const_constructors
-                      child: Icon(
-                        Icons.location_on,
-                        size: 100,
-                        color: Color.fromARGB(255, 20, 8, 51),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 90,
+                            width: 50,
+                            // ignore: sort_child_properties_last
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(
+                                  Icons.egg_rounded,
+                                  color: Colors.white,
+                                  size: 50,
+                                ),
+                                Text(
+                                  '4 Eggs',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 20, 8, 51),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  bottomLeft: Radius.circular(20)),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                            height: 90.0,
+                            width: 12.0,
+                            child: VerticalDivider(color: Colors.white)),
+                        Expanded(
+                          child: Container(
+                            // ignore: sort_child_properties_last
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(
+                                  Icons.cake_sharp,
+                                  color: Colors.white,
+                                  size: 50,
+                                ),
+                                Text(
+                                  '2 tsp Vanilla',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            height: 90,
+                            width: 50,
+                            color: const Color.fromARGB(255, 20, 8, 51),
+                          ),
+                        ),
+                        const SizedBox(
+                            height: 90.0,
+                            width: 10.0,
+                            child: VerticalDivider(color: Colors.white)),
+                        Expanded(
+                          child: Container(
+                            height: 90,
+                            width: 50,
+                            // ignore: sort_child_properties_last
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(
+                                  Icons.rice_bowl,
+                                  color: Colors.white,
+                                  size: 50,
+                                ),
+                                Text(
+                                  '1 Cup Sugar',
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 20, 8, 51),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20),
+                                  bottomRight: Radius.circular(20)),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                  ),
+
+                  SizedBox(
+                    height: 50.0,
+                  ),
+                  // ignore: sized_box_for_whitespace
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 2),
+                        height: 100,
+                        width: 100,
+                        // ignore: prefer_const_constructors
+                        child: Icon(
+                          Icons.location_on,
+                          size: 100,
+                          color: Color.fromARGB(255, 20, 8, 51),
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          const Text(
+                            'DELIVERY',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          const Text(
+                            'Location',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          Text('Nr. Hamer Road, London',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white)),
+                        ],
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.,
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
-                        const Text(
-                          'DELIVERY',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        // ignore: prefer_const_constructors
+                        Text('Ratings',
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.white)),
+                        // ignore: prefer_const_constructors
+                        Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 20,
                         ),
-                        const Text(
-                          'Location',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        // ignore: prefer_const_constructors
+                        Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 20,
                         ),
-                        Text('Nr. Hamer Road, London',
-                            style:
-                                TextStyle(fontSize: 16, color: Colors.white)),
+                        // ignore: prefer_const_constructors
+                        Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 20,
+                        ),
+                        // ignore: prefer_const_constructors
+                        Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 20,
+                        ),
+                        // ignore: prefer_const_constructors
+                        Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 20,
+                        ),
+                        Text(
+                          '(55)',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ],
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    //mainAxisAlignment: MainAxisAlignment.,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      // ignore: prefer_const_constructors
-                      Text('Ratings',
-                          style: const TextStyle(
-                              fontSize: 20, color: Colors.white)),
-                      // ignore: prefer_const_constructors
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 20,
-                      ),
-                      // ignore: prefer_const_constructors
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 20,
-                      ),
-                      // ignore: prefer_const_constructors
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 20,
-                      ),
-                      // ignore: prefer_const_constructors
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 20,
-                      ),
-                      // ignore: prefer_const_constructors
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 20,
-                      ),
-                      Text(
-                        '(55)',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

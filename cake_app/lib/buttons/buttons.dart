@@ -7,17 +7,26 @@ import '../screen/second_screen.dart';
 class OutLinedButton extends StatefulWidget {
   OutLinedButton({super.key});
 
+  
+   
   @override
   State<OutLinedButton> createState() => _OutLinedButtonState();
 }
 
-final List<bool> kilograms = <bool>[true, false, false, true];
-
 class _OutLinedButtonState extends State<OutLinedButton> {
-  int? _value = 1;
+  var _value;
+
+ 
+
+
+
 
   @override
   Widget build(BuildContext context) {
+    
+   
+    
+    
     return Wrap(
       children: List<Widget>.generate(
         4,
@@ -33,16 +42,19 @@ class _OutLinedButtonState extends State<OutLinedButton> {
               onSelected: (bool selected) {
                 setState(() {
                   _value = selected ? index : null;
-                });
+                                     
+                     for(index;index<4;index++){
+                      index ;
+                     }
+
+
+              });
               },
             ),
           );
         },
       ).toList(),
-    );
-  }
-}
+    );}}
 
-    // ignore: dead_code
+
    
-  
